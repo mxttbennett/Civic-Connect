@@ -1,0 +1,119 @@
+li a {
+    color: white;
+}
+
+li a:hover {
+    color: white;
+}
+
+body {
+	color: white;
+    background-color: #69047d;
+	text-align: center;
+}	
+
+/*
+p {
+	font-size: 20px;
+}
+*/
+
+.form-group {
+  margin: auto;
+  width: 40%;
+  height: 20%;
+}
+
+.non-nav-link {
+  color: white;
+  font-size: 25px;
+}
+
+label {
+	color: white;
+	font-weight: bold;
+	font-size: 25px;
+}
+
+.outer-form {
+	
+  margin-top: 2.5%;
+}
+
+.listed-items {
+	font-size: 30px;
+	text-align: center;
+}
+
+.page-header {
+	color: white;
+	font-size: 50px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.time {
+	color: #05f2ee;
+}
+
+.author {
+	color: white;
+}
+
+.choices {
+	display: inline-block;
+	text-align: center;
+}
+
+.radioDiv {
+  margin: auto;
+  width: auto;
+  text-align: left;
+  display: table;
+}
+
+.radioLabel {
+  padding-left: 10px;
+}
+
+.voteDiv {
+  padding-top: 10px;
+  text-align: center;
+}
+
+.commentDiv {
+  text-align: center;
+  font-size: 20px;
+}
+
+.submitDiv {
+  text-align: center;
+}
+
+.resultsDiv {
+  text-align: center;
+  font-size: 20px;
+}
+
+.vote-again {
+	font-size: 32px;
+	text-align: center;
+	color: #05f2ee;
+}
+
+.vote-again a:hover {
+	
+	color: white;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: -15;
+  width: 100%;
+  background-color: #333333;
+  color: white;
+  text-align: center;
+  font-size: 90px;
+}

@@ -1,0 +1,196 @@
+{% load socialaccount %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">  <!-- required to handle IE -->
+        
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+  
+    <!-- <link rel="stylesheet" href="{% static 'cc/style.css' %}"> -->
+
+    
+    <title>Civic Connect</title>
+        
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+    <header>
+      
+      <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+<!-- 		{% if user.socialaccount_set.all.0.uid in id_list %}
+		  {% for site_user in user_list %}
+			{% if user.socialaccount_set.all.0.uid == site_user.user_id %}
+			<a class="navbar-brand" href="" style="color: #00ECFF">Welcome, {{ site_user.user_first_name }}!</a>
+			{% endif %}
+		  {% endfor %}
+		{% else %}
+        <a class="navbar-brand" href="">Welcome, {{ user.username }}!</a>
+		{% endif %} -->
+		<a class="navbar-brand" href="../" style="color: #00ECFF">Civic Connect</a>
+		<ul class="navbar-nav"
+			 <li class="nav-item">
+				<a class="nav-link" href="/profile/" style="font-size: 20">Your Profile</a>
+			 </li>
+		 </ul>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <ul class="navbar-nav"
+        <li class="nav-item">
+         <a class="nav-link active" href="/template_builder/" style="font-size: 20px">>Template Builder<</a>
+      </li>     
+     </ul>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+       
+       
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">   
+          <ul class="navbar-nav">
+
+            <li class="nav-item">
+              <form method="post" action="{% url 'account_logout' %}">
+				  {% csrf_token %}
+					{% if redirect_field_value %}
+					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+					{% endif %}
+					<button type="submit">Logout</button>
+			   </form>
+            </li>           
+          </ul>
+        </div>  
+      </nav>
+
+    </header>
+            
+  
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Template Builder</h1>
+        <div id="fadeshow"><p>Welcome! In the form below, feel free to fill out an email template that you'd like to see other users use! Keep in mind, however, that submitting a template doesn't necessarily mean it will immediately show up on our website, but it will enter a review process where our admins can either approve or deny it.</p></div>
+            
+      </div>
+    </div>
+    
+  
+    <section class="highlight">  
+    <div class="container">
+      <div class="row">
+         <div class="col-md-4"></div> 
+        <div class="col-md-4">
+          <!-- <img src="images/image.png" alt="image1"> -->
+          <h3>Submit a Template</h3>
+          <p>
+            <form action="{% url 'cc:templateBuilder' %}"method="post">
+               <input type="hidden" name="user_id" id="user_id" value="{{ user.socialaccount_set.all.0.uid }}">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <div class="form-actions">
+                <button type="submit">Submit</button>
+              </div>
+            </form>
+          </p>
+        </div> 
+      </div>
+    </div>
+    </section>
+
+ <!-- ************************************** ELSE  ************************************** -->
+    {% else %}
+	<head>
+      <meta http-equiv = "refresh" content = "0.125; url = ../" />
+   </head>
+    <header>
+      
+      <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<a class="navbar-brand" href="{% provider_login_url 'google' %}" style="color: #00ECFF">Login with Google</a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+       
+       
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">   
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="navbar-brand" href="{% provider_login_url 'google' %}?next=/portal/">Login</a>
+            </li>              
+            <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Research</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="dropdown-item" href="#">Software Engineering</a>
+                <a class="dropdown-item" href="#">Software Testing</a>
+                <a class="dropdown-item" href="#">Software Reliability Engineering</a>
+                <a class="dropdown-item" href="#">Crowd Testing</a>
+             </div>
+            </li>                             
+            <li class="nav-item"> 
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled-menu</a>
+            </li>
+			-->            
+          </ul>
+        </div>  
+      </nav>
+
+    </header>
+            
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Civic Connect</h1>
+        <div id="fadeshow"><p>Log in to start contacting your representatives about the issues you care about today!</p></div>
+ 
+            
+      </div>
+    </div>
+    
+    <section class="highlight">  
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <!-- <img src="images/image.png" alt="image1"> -->
+          <h3>Templated Issues</h3>
+          <p>
+            Log in to view our issue templates. 
+          </p>
+        </div>
+        <div class="col-md-4">
+          <!-- <img src="images/image.png" alt="image2"> -->
+          <h3>Contact Your Representatives</h3>
+          <p>
+            Log in to contact your representatives.
+          </p>
+        </div>
+        <div class="col-md-4">
+          <!-- <img src="images/image.png" alt="image3"> -->
+          <h3>Your Profile</h3>
+          <p>
+            Log in to create and/or view your profile.
+          </p>
+
+        </div>      
+      </div>
+    </div>
+    </section>
+    {% endif %}
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    
+    
+  </body>
+</html>

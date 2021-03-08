@@ -1,0 +1,280 @@
+{% load socialaccount %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">  <!-- required to handle IE -->
+        
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+  
+    <!-- <link rel="stylesheet" href="{% static 'cc/style.css' %}"> -->
+
+    
+    <title>Civic Connect</title>
+        
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+    <header>
+      
+      <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+<!-- 		{% if user.socialaccount_set.all.0.uid in id_list %}
+		  {% for site_user in user_list %}
+			{% if user.socialaccount_set.all.0.uid == site_user.user_id %}
+			<a class="navbar-brand" href="" style="color: #00ECFF">Welcome, {{ site_user.user_first_name }}!</a>
+			{% endif %}
+		  {% endfor %}
+		{% else %}
+        <a class="navbar-brand" href="">Welcome, {{ user.username }}!</a>
+		{% endif %} -->
+		<a class="navbar-brand" href="../" style="color: #00ECFF">> Civic Connect <</a>
+		<ul class="navbar-nav"
+			 <li class="nav-item">
+				<a class="nav-link" href="/profile/" style="font-size: 20">Your Profile</a>
+			 </li>
+		 </ul>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+       
+       
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">   
+          <ul class="navbar-nav">
+
+            <li class="nav-item">
+              <form method="post" action="{% url 'account_logout' %}">
+				  {% csrf_token %}
+					{% if redirect_field_value %}
+					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+					{% endif %}
+					<button type="submit">Logout</button>
+			   </form>
+            </li>           
+          </ul>
+        </div>  
+      </nav>
+
+    </header>
+            
+  
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Civic Connect</h1>
+        <div id="fadeshow"><p>Welcome! We are glad to have you on our site... you are now just a few clicks away from reaching out to your representatives! To start, you can either begin with a template or you can start completely from scratch—the choice is up to you. Start contacting your representatives about the issues you care about today!</p></div>
+            
+      </div>
+    </div>
+    
+  
+    <section class="highlight">  
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <!-- <img src="images/image.png" alt="image1"> -->
+          <h3>Issue Templates</h3>
+		  
+		  	<form action="{% url 'cc:profile' %}" method="post">
+			{% csrf_token %}
+				<div class="radioDiv">
+				{% for issue in issues %}
+					<input type="radio" name="issue_input" id="issue.id" value="{{ issue.issue_name }}">
+					<label class="radioLabel" for="issue.id">{{ issue.issue_name }}</label><br>
+				{% endfor %}
+				</div>
+				<input type="submit" value="Continue to template">
+			</form>
+			<ul>
+<!-- 				{% if user_issues %}
+					{% for user_issue in user_issues %}
+						{% if user.socialaccount_set.all.0.uid == user_issue.user_id %}
+							
+						<li>{{ issue.issue_name }}</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+				{% else %}
+				<p>You currently have no bookmarks.</p>
+				
+			  {% endif %} -->
+<!-- 			  {% if issues %}
+				{% for issue in issues %}
+					<li>{{ issue.issue_name }}</li>
+					<li>{{ issue.issue_text }}</li>
+				{% endfor %}
+			  {% endif %} -->
+
+        </div>
+        <div class="col-md-4">
+          <!-- <img src="images/image.png" alt="image1"> -->
+          <h3>Contact Your Representatives</h3>
+          <p>
+            <form method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <div class="form-actions">
+                <button type="submit">Send</button>
+              </div>
+            </form>
+          </p>
+        </div>
+        <div class="col-md-4">
+          <!-- <img src="images/image.png" alt="image1"> -->
+          {% if user.socialaccount_set.all.0.uid not in id_list %}
+          <h3>Please Complete Your Profile</h3>
+
+          <p>
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            <form action="{% url 'cc:userinfo' %}" method="post">
+              {% csrf_token %}
+       
+              <label for="user_id">Welcome! Please complete and submit the form below.</label><br>
+              <input type="hidden" name="user_id" id="user_id" value="{{ user.socialaccount_set.all.0.uid }}">
+              
+              <input type="text" name="first_name" id="first_name" placeholder="First Name" required>
+              <br>
+              <input type="text" name="last_name" id="last_name" placeholder="Last Name" required>
+              <br>
+              <input type="text" name="street" id="street" placeholder="Street Address" required>
+              <br>
+              <input type="text" name="city" id="city" placeholder="City" required>
+              <br>
+              <input type="text" name="state" id="state" placeholder="State" required>
+              <br>
+              <input type="text" name="zip" id="zip" placeholder="Zip" required>
+              <br>
+              <input type="text" name="email" id="email" placeholder="Email" required>
+              <br>
+              <input type="text" name="phone" id="phone" placeholder="Phone Number" required>
+              <br>
+
+              <input type="submit" value="Submit">
+            </form>
+          {% else %}
+		  {% csrf_token %}
+		  {% for site_user in user_list %}
+		  
+<!--           <form action="{% url 'cc:displayinfo' %}" method="post">
+              
+      
+              <input type="hidden" name="user_id" id="user_id" value="{{ user.socialaccount_set.all.0.uid }}">
+
+              <input type="submit" value="Show">
+          </form> -->
+
+		 {% if user.socialaccount_set.all.0.uid == site_user.user_id %}
+          <h3>Your Profile</h3>
+            <p>
+              <b>Name:</b> {{site_user.user_first_name}} {{site_user.user_last_name}}
+            </p>
+            <p>
+              <b>Address:</b> {{site_user.user_street_add}}, {{site_user.user_city_add}}, {{site_user.user_state_add}}, {{site_user.user_zip}}
+            </p>
+            <p>
+              <b>Email:</b> {{site_user.user_email}}
+            </p>
+            <p>
+              <b>Phone:</b> {{site_user.user_phone}}
+            </p>
+		  {% endif %}
+		 {% endfor %}
+        {% endif %}
+
+        </div>      
+      </div>
+    </div>
+    </section>
+
+ <!-- ************************************** ELSE  ************************************** -->
+    {% else %}
+    <header>
+      
+      <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<a class="navbar-brand" href="{% provider_login_url 'google' %}" style="color: #00ECFF">Login with Google</a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+       
+       
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">   
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="navbar-brand" href="{% provider_login_url 'google' %}?next=/portal/">Login</a>
+            </li>              
+            <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Research</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="dropdown-item" href="#">Software Engineering</a>
+                <a class="dropdown-item" href="#">Software Testing</a>
+                <a class="dropdown-item" href="#">Software Reliability Engineering</a>
+                <a class="dropdown-item" href="#">Crowd Testing</a>
+             </div>
+            </li>                             
+            <li class="nav-item"> 
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled-menu</a>
+            </li>
+			-->            
+          </ul>
+        </div>  
+      </nav>
+
+    </header>
+            
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Civic Connect</h1>
+        <div id="fadeshow"><p>Log in to start contacting your representatives about the issues you care about today!</p></div>
+ 
+            
+      </div>
+    </div>
+    
+    <section class="highlight">  
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <!-- <img src="images/image.png" alt="image1"> -->
+          <h3>Templated Issues</h3>
+          <p>
+            Log in to view our issue templates. 
+          </p>
+        </div>
+        <div class="col-md-4">
+          <!-- <img src="images/image.png" alt="image2"> -->
+          <h3>Contact Your Representatives</h3>
+          <p>
+            Log in to contact your representatives.
+          </p>
+        </div>
+        <div class="col-md-4">
+          <!-- <img src="images/image.png" alt="image3"> -->
+          <h3>Your Profile</h3>
+          <p>
+            Log in to create and/or view your profile.
+          </p>
+
+        </div>      
+      </div>
+    </div>
+    </section>
+    {% endif %}
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    
+    
+  </body>
+</html>

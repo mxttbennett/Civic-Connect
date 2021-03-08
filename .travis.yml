@@ -1,0 +1,13 @@
+language: python
+python:
+- '3.8'
+install:
+- pip install -r requirements-travis.txt
+script: "python manage.py test"
+deploy:
+  provider: heroku
+  api_key:
+    secure: Hse+GYJmtu6xIOqWzIlKFrpqhKf5uHKDk23pMozYgBXl7u9jBRp/i0eJs7B3TLE2X97Qs7v35uCqHBAyIUF9snIFXQ1Iyk9VuU0GFUdpWTwvvs690sQw6PN/3d4Re+u7XX71CY1qXUlFeTDmm07igQtsdS2eeND25mB/DGlkxGf8Jr1WcuHJkc9o4Nlon0Mh6SJwm/xB7isldctHJl2md+gVzg+Q0TYWbtxn1eCjGVvaIQbGyVQLXxPt4enZKMalyCjMr7YoU1Cn9t8TfSh9mU/zAtbGr9Yilp9Cc3lTkPVXloW0YKsv+0Pkl1vY7+BickGla88OdJiL8qekr7UzqtM8mbGgkAnp6k5zEg9FbOTlaDq2M3tNR/cLMYxUxZ9NK8IOBLD+hcj0dSHHnxiJ3J8ONNm6l5I8OqLdmQnNW9KjXnxgNFjY/Wx1WG5DfSVKDqw/XnZbUvXrAg9ofJ2rjN8fzfftzgTUQF8PtODGQiNiVyzkOpOd6tc9QASg8YlTYnaWunZLD/WVDdBXuhEs/AemJwmvPhOiXYTKrqv9Dk4hZ68JFFqcD1of8GEFCEgWzBMlEfSArh+Pbw6chunghCr/Aa1dfR8nx+2QtnDzBfcIf3gEfRioUdn0kKuPHdoFkgsTzHC/jxHa/RMTCu2AEgXDVZ/83mmEk2IYAm6HXjY=
+  app: civic-connect-140
+  on:
+    repo: uva-cs3240-f20/project-1-40
